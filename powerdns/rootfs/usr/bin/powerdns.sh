@@ -15,7 +15,7 @@ MYSQL_USER=$(bashio::config 'MYSQL_USER')
 MYSQL_PORT=$(bashio::config 'MYSQL_PORT')
 
 # --help, --version
-[ "$1" = "--help" ] || [ "$1" = "--version" ] && exec pdns_server $1
+[ "$1" = "--help" ] || [ "$1" = "--version" ] && exec pdns_server "$1"
 # treat everything except -- as exec cmd
 [ "${1:0:2}" != "--" ] && exec "$@"
 
@@ -37,13 +37,13 @@ if $MYSQL_AUTOCONF ; then
   }
 
   RETRY=10
-  until [ `isDBup` -eq 0 ] || [ $RETRY -le 0 ] ; do
+  until [ "$(isDBup)" -eq 0 ] || [ $RETRY -le 0 ] ; do
     echo "Waiting for database to come up"
     sleep 5
-    RETRY=$(expr $RETRY - 1)
+    RETRY=$($RETRY - 1)
   done
-  if [ $RETRY -le 0 ]; then
-    >&2 echo Error: Could not connect to Database on $MYSQL_HOST:$MYSQL_PORT
+  if [ "$RETRY" -le 0 ]; then
+    >&2 echo "Error: Could not connect to Database on $MYSQL_HOST:$MYSQL_PORT"
     exit 1
   fi
 
@@ -53,13 +53,14 @@ if $MYSQL_AUTOCONF ; then
 
   if [ "$(echo "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = \"$MYSQL_DB\";" | $MYSQLCMD)" -le 1 ]; then
     echo Initializing Database
-    cat /etc/pdns/schema.sql | $MYSQLCMD
+    < /etc/pdns/schema.sql $MYSQLCMD
 
     # Run custom mysql post-init sql scripts
     if [ -d "/etc/pdns/mysql-postinit" ]; then
+    # shellcheck disable=SC2012
       for SQLFILE in $(ls -1 /etc/pdns/mysql-postinit/*.sql | sort) ; do
-        echo Source $SQLFILE
-        cat $SQLFILE | $MYSQLCMD
+        echo Source "$SQLFILE"
+        < "$SQLFILE" $MYSQLCMD
       done
     fi
   fi
