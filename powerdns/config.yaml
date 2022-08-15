@@ -3,7 +3,7 @@ name: PowerDNS
 version: dev
 slug: powerdns
 description: PowerDNS server with mysql
-url: https://github.com/hassio-addons/addon-example
+url: https://github.com/dawiki/addon-powerdns
 codenotary: dawiki@me.com
 init: false
 arch:
