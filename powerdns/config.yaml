@@ -15,7 +15,7 @@ arch:
 options:
   MYSQL_AUTOCONF: true
   MYSQL_HOST: mysql
-  MYSQL_DNSSEC: 'no'
+  MYSQL_DNSSEC: "no"
   MYSQL_DB: pdns
   MYSQL_PASS: changeme
   MYSQL_USER: root
