@@ -1,0 +1,9 @@
+#!/command/with-contenv bashio
+# ==============================================================================
+# Home Assistant Community Add-on: Example
+# Runs PowerDNS script
+# ==============================================================================
+
+bashio::log.info "Starting PowerDNS..."
+
+exec /usr/bin/powerdns.sh

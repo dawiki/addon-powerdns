@@ -1,0 +1,27 @@
+---
+name: PowerDNS
+version: dev
+slug: powerdns
+description: PowerDNS server with mysql
+url: https://github.com/hassio-addons/addon-example
+codenotary: dawiki@me.com
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+options:
+  MYSQL_AUTOCONF: true
+  MYSQL_HOST: mysql
+  MYSQL_DNSSEC: no
+  MYSQL_DB: pdns
+  MYSQL_PASS: changeme
+  MYSQL_USER: root
+  MYSQL_PORT: 3306
+  
+schema:
+  MYSQL_AUTOCONF: boolean
+  MYSQL_PORT: int(1,65535)
+  MYSQL_DNSSEC: list(yes|no)
