@@ -8,11 +8,10 @@ COPY rootfs /
 # Setup base
 ENV POWERDNS_VERSION=4.6.3
 
-SHELL /bin/ash
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 
 # hadolint ignore=DL3003
-RUN set -o pipefail && \
-    apk --no-cache add bash=5.1.16-r2 libpq=14.5-r0 sqlite-libs=3.38.5-r0 libstdc++=11.2.1_git20220219-r2 libgcc=11.2.1_git20220219-r2 mariadb-client=10.6.8-r0 mariadb-connector-c=3.1.13-r4 lua5.1-dev=5.1.5-r11 curl-dev=7.83.1-r2 && \
+RUN apk --no-cache add bash=5.1.16-r2 libpq=14.5-r0 sqlite-libs=3.38.5-r0 libstdc++=11.2.1_git20220219-r2 libgcc=11.2.1_git20220219-r2 mariadb-client=10.6.8-r0 mariadb-connector-c=3.1.13-r4 lua5.1-dev=5.1.5-r11 curl-dev=7.83.1-r2 && \
     apk --no-cache add --virtual build-deps \
       g++=11.2.1_git20220219-r2 make=4.3-r0 mariadb-dev=10.6.8-r0 postgresql13-dev=13.8-r0 sqlite-dev=3.38.5-r0 curl=7.83.1-r2 boost-dev=1.78.0-r1 mariadb-connector-c-dev=3.1.13-r4 && \
     curl -sSL https://downloads.powerdns.com/releases/pdns-$POWERDNS_VERSION.tar.bz2 | tar xj -C /tmp && \
