@@ -6,15 +6,6 @@
 # This add-on runs PowerDNS
 # ==============================================================================
 
-
-local MYSQL_AUTOCONF
-local MYSQL_HOST
-local MYSQL_DNSSEC
-local MYSQL_DB
-local MYSQL_PASS
-local MYSQL_USER
-local MYSQL_PORT
-
 MYSQL_AUTOCONF=$(bashio::config 'MYSQL_AUTOCONF')
 MYSQL_HOST=$(bashio::config 'MYSQL_HOST')
 MYSQL_DNSSEC=$(bashio::config 'MYSQL_DNSSEC')

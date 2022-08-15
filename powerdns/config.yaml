@@ -15,12 +15,12 @@ arch:
 options:
   MYSQL_AUTOCONF: true
   MYSQL_HOST: mysql
-  MYSQL_DNSSEC: no
+  MYSQL_DNSSEC: 'no'
   MYSQL_DB: pdns
   MYSQL_PASS: changeme
   MYSQL_USER: root
   MYSQL_PORT: 3306
-  
+
 schema:
   MYSQL_AUTOCONF: boolean
   MYSQL_PORT: int(1,65535)

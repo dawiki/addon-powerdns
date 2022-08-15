@@ -8,8 +8,9 @@ COPY rootfs /
 # Setup base
 ENV POWERDNS_VERSION=4.6.0
 
-RUN apk --update add bash libpq sqlite-libs libstdc++ libgcc mariadb-client mariadb-connector-c lua-dev curl-dev && \
-    apk add --virtual build-deps \
+RUN set -o pipefail && \
+    apk --no-cache add bash libpq sqlite-libs libstdc++ libgcc mariadb-client mariadb-connector-c lua-dev curl-dev && \
+    apk --no-cach add --virtual build-deps \
       g++ make mariadb-dev postgresql-dev sqlite-dev curl boost-dev mariadb-connector-c-dev && \
     curl -sSL https://downloads.powerdns.com/releases/pdns-$POWERDNS_VERSION.tar.bz2 | tar xj -C /tmp && \
     cd /tmp/pdns-$POWERDNS_VERSION && \
@@ -23,7 +24,7 @@ RUN apk --update add bash libpq sqlite-libs libstdc++ libgcc mariadb-client mari
     apk del --purge build-deps && \
     apk add boost-libs && \
     mv /tmp/lib* /usr/lib/ && \
-    rm -rf /tmp/pdns-$POWERDNS_VERSION /var/cache/apk/*
+    rm -rf /tmp/pdns-$POWERDNS_VERSION
 
 # Build arguments
 ARG BUILD_ARCH
